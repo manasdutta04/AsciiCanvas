@@ -4,6 +4,33 @@
 
 ---
 
+## 2026-04-05 — Added hand tool and improved keybindings
+
+**Agent:** opencode
+
+**Hand Tool:**
+
+- Added `hand` tool type in `types.ts`
+- Implemented click-drag panning in `InfiniteCanvas.tsx` (no Space key needed)
+- Shows `grab`/`grabbing` cursor, no cell highlighting on hover
+- Added hand button with SVG icon to `Toolbar.tsx`
+- Added hand tool label and hint to `StatusBar.tsx`
+
+**Keybinding Reorganization:**
+
+- `V` = Select, `H` = Hand (new)
+- `B` = Box single (was R), `U` = Box heavy (was H)
+- `G` = Fill (was B)
+- Updated shortcut pills in TopBar to reflect new keys
+
+**New Shortcuts:**
+
+- Arrow keys — pan canvas 20px per press
+- Ctrl+A — select all content on canvas
+- Updated `.agents/project-state.md` with full keybinding reference
+
+---
+
 ## 2026-04-05 — Created agent documentation files
 
 **Agent:** opencode

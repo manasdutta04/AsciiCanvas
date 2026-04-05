@@ -80,8 +80,42 @@ pnpm --filter @asciicanvas/api-spec run codegen
 - No `.git` directory (was removed during cleanup)
 - No `.env` files present — environment variables must be set manually
 - `pnpm-lock.yaml` is up to date with 464 packages
+- **Hand tool** added to ascii-editor (click-drag panning, `H` key)
+- **Keybindings reorganized** — see dev-guide.md for current key map
+- **New shortcuts**: Arrow keys (pan), Ctrl+A (select all)
 
 ## Known Issues
 
 - API server dev script uses Unix syntax (`NODE_ENV=development tsx ...`) — fails on Windows
 - `preinstall` script was removed from root `package.json` due to Windows `sh` incompatibility
+
+## Editor Keybindings (ascii-editor)
+
+| Key | Tool          | Key | Tool     |
+| --- | ------------- | --- | -------- |
+| `V` | Select        | `L` | Line     |
+| `H` | Hand          | `A` | Arrow    |
+| `B` | Box (single)  | `M` | Diamond  |
+| `D` | Box (double)  | `T` | Text     |
+| `O` | Box (rounded) | `F` | Freehand |
+| `U` | Box (heavy)   | `G` | Fill     |
+|     |               | `E` | Eraser   |
+
+| Shortcut                  | Action                                      |
+| ------------------------- | ------------------------------------------- |
+| `Ctrl+Z`                  | Undo                                        |
+| `Ctrl+Y` / `Ctrl+Shift+Z` | Redo                                        |
+| `Ctrl+C`                  | Copy ASCII to clipboard                     |
+| `Ctrl+A`                  | Select all content                          |
+| `Ctrl+E`                  | Toggle export modal                         |
+| `Ctrl+0`                  | Reset view                                  |
+| `Ctrl+Shift+F`            | Zoom to fit                                 |
+| `[` / `]`                 | Zoom out / in                               |
+| Arrow keys                | Pan canvas (20px)                           |
+| `Home`                    | Reset view                                  |
+| `Escape`                  | Clear selection / cancel text / close modal |
+| `Delete` / `Backspace`    | Delete selection                            |
+| Space+drag                | Pan canvas (any tool)                       |
+| Middle-click+drag         | Pan canvas                                  |
+| Ctrl+scroll               | Zoom (cursor-centered)                      |
+| Scroll                    | Pan canvas                                  |
