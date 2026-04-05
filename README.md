@@ -1,10 +1,10 @@
-# AsciiCanvas
+# ASCII canvas
 
 A monorepo for building and managing ASCII-based canvas applications, powered by a modern TypeScript stack.
 
 ## Overview
 
-AsciiCanvas is a pnpm workspace monorepo that provides:
+ASCII canvas is a pnpm workspace monorepo that provides:
 
 - **ASCII Editor** — A React-based frontend for creating and editing ASCII art
 - **Mockup Sandbox** — An interactive preview environment for mockups and prototypes
@@ -27,7 +27,7 @@ AsciiCanvas is a pnpm workspace monorepo that provides:
 ## Project Structure
 
 ```
-AsciiCanvas/
+ASCII canvas/
 ├── artifacts/              # Deployable applications
 │   ├── api-server/         # Express 5 API server
 │   ├── ascii-editor/       # React frontend (ASCII art editor)
