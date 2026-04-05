@@ -260,9 +260,11 @@ function ToolBtn({
           ? "1px solid rgba(137,180,250,0.45)"
           : "1px solid transparent",
         color: active ? "#89b4fa" : "#7f849c",
+        position: "relative",
       }}
     >
       {def.icon}
+      <span style={styles.keyBadge}>{def.key}</span>
     </button>
   );
 }
@@ -325,6 +327,20 @@ const styles: Record<string, React.CSSProperties> = {
     transition: "all 0.1s",
     flexShrink: 0,
     outline: "none",
+  },
+  keyBadge: {
+    position: "absolute",
+    bottom: -2,
+    right: -2,
+    background: "#1e1e2e",
+    border: "1px solid #313244",
+    borderRadius: 3,
+    fontSize: 7,
+    fontWeight: 700,
+    color: "#6c7086",
+    padding: "0 2px",
+    lineHeight: "12px",
+    fontFamily: "'Fira Code','Courier New',monospace",
   },
   navBadge: {
     position: "absolute",
