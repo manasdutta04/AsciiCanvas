@@ -234,8 +234,6 @@ export function AsciiEditor() {
 
       if (!textSession) {
         const map: Record<string, Tool> = {
-          v: "select",
-          h: "hand",
           b: "rect_single",
           d: "rect_double",
           o: "rect_rounded",
@@ -252,6 +250,12 @@ export function AsciiEditor() {
         if (t && !e.ctrlKey && !e.metaKey) {
           e.preventDefault();
           setTool(t);
+          setSelection(null);
+        }
+
+        if (e.key.toLowerCase() === "v" && !e.ctrlKey && !e.metaKey) {
+          e.preventDefault();
+          setTool((prev) => (prev === "hand" ? "select" : "hand"));
           setSelection(null);
         }
 

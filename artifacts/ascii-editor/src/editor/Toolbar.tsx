@@ -17,7 +17,7 @@ const TOOLS: ToolDef[] = [
     group: "nav",
     icon: <SelectIcon />,
   },
-  { id: "hand", label: "Hand", key: "H", group: "nav", icon: <HandIcon /> },
+  { id: "hand", label: "Hand", key: "V", group: "nav", icon: <HandIcon /> },
   {
     id: "rect_single",
     label: "Box · Single",
@@ -108,6 +108,19 @@ export function Toolbar({
   return (
     <div style={styles.toolbar}>
       {groups.map((g, gi) => {
+        if (g === "nav") {
+          return (
+            <React.Fragment key={g}>
+              <NavToggleBtn
+                tool={tool}
+                onToggle={() =>
+                  onToolChange(tool === "hand" ? "select" : "hand")
+                }
+                onHover={setTooltip}
+              />
+            </React.Fragment>
+          );
+        }
         const group = TOOLS.filter((t) => t.group === g);
         return (
           <React.Fragment key={g}>
@@ -190,6 +203,37 @@ export function Toolbar({
 
       {tooltip && <div style={styles.tooltip}>{tooltip}</div>}
     </div>
+  );
+}
+
+function NavToggleBtn({
+  tool,
+  onToggle,
+  onHover,
+}: {
+  tool: Tool;
+  onToggle: () => void;
+  onHover: (t: string | null) => void;
+}) {
+  const isHand = tool === "hand";
+  return (
+    <button
+      onClick={onToggle}
+      onMouseEnter={() =>
+        onHover(`${isHand ? "Hand" : "Select"}  [V — click to toggle]`)
+      }
+      onMouseLeave={() => onHover(null)}
+      style={{
+        ...styles.btn,
+        background: "rgba(137,180,250,0.15)",
+        border: "1px solid rgba(137,180,250,0.45)",
+        color: "#89b4fa",
+        position: "relative",
+      }}
+    >
+      {isHand ? <HandIcon /> : <SelectIcon />}
+      <span style={styles.navBadge}>V</span>
+    </button>
   );
 }
 
@@ -281,6 +325,20 @@ const styles: Record<string, React.CSSProperties> = {
     transition: "all 0.1s",
     flexShrink: 0,
     outline: "none",
+  },
+  navBadge: {
+    position: "absolute",
+    bottom: -2,
+    right: -2,
+    background: "#1e1e2e",
+    border: "1px solid #313244",
+    borderRadius: 3,
+    fontSize: 7,
+    fontWeight: 700,
+    color: "#6c7086",
+    padding: "0 2px",
+    lineHeight: "12px",
+    fontFamily: "'Fira Code','Courier New',monospace",
   },
   divider: {
     width: 24,
