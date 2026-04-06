@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Tool } from "./types";
+import { Tool, COLOR_PALETTE, DEFAULT_COLOR } from "./types";
 
 interface ToolDef {
   id: Tool;
@@ -85,6 +85,8 @@ interface Props {
   onZoomChange: (z: number) => void;
   fillChar: string;
   onFillCharChange: (c: string) => void;
+  color: string;
+  onColorChange: (c: string) => void;
 }
 
 export function Toolbar({
@@ -99,9 +101,12 @@ export function Toolbar({
   onZoomChange,
   fillChar,
   onFillCharChange,
+  color,
+  onColorChange,
 }: Props) {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [editingFill, setEditingFill] = useState(false);
+  const [showColors, setShowColors] = useState(false);
 
   const groups = ["nav", "rect", "draw", "util"];
 
@@ -171,6 +176,38 @@ export function Toolbar({
           </div>
         </>
       )}
+
+      <div style={styles.divider} />
+
+      <div style={styles.colorWrap} title="Color">
+        <button
+          onClick={() => setShowColors(!showColors)}
+          style={{
+            ...styles.colorBtn,
+            background: color,
+          }}
+          title="Click to change color"
+        />
+        {showColors && (
+          <div style={styles.colorPalette}>
+            {COLOR_PALETTE.map((c) => (
+              <button
+                key={c}
+                onClick={() => {
+                  onColorChange(c);
+                  setShowColors(false);
+                }}
+                style={{
+                  ...styles.colorSwatch,
+                  background: c,
+                  border:
+                    c === color ? "2px solid #89b4fa" : "1px solid #313244",
+                }}
+              />
+            ))}
+          </div>
+        )}
+      </div>
 
       <div style={{ flex: 1 }} />
       <div style={styles.divider} />
@@ -368,6 +405,41 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     width: 34,
+  },
+  colorWrap: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    width: 34,
+    position: "relative",
+  },
+  colorBtn: {
+    width: 28,
+    height: 28,
+    borderRadius: 6,
+    border: "1px solid #313244",
+    cursor: "pointer",
+    boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+  },
+  colorPalette: {
+    position: "absolute",
+    top: 38,
+    left: 40,
+    display: "grid",
+    gridTemplateColumns: "repeat(3, 1fr)",
+    gap: 4,
+    background: "#1e1e2e",
+    border: "1px solid #313244",
+    borderRadius: 8,
+    padding: 6,
+    zIndex: 100,
+    boxShadow: "0 4px 16px rgba(0,0,0,0.5)",
+  },
+  colorSwatch: {
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    cursor: "pointer",
   },
   fillBtn: {
     width: 28,

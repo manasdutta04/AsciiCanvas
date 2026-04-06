@@ -26,6 +26,7 @@ interface Props {
   tool: Tool;
   cells: Cells;
   fillChar: string;
+  color: string;
   onCommit: (newCells: Cells) => void;
   zoom: number;
   onZoomChange: (z: number) => void;
@@ -55,6 +56,7 @@ export function InfiniteCanvas({
   tool,
   cells,
   fillChar,
+  color,
   onCommit,
   zoom,
   onZoomChange,
@@ -121,6 +123,7 @@ export function InfiniteCanvas({
     tool,
     selection,
     fillChar,
+    color,
   });
   useEffect(() => {
     stateRef.current = {
@@ -132,6 +135,7 @@ export function InfiniteCanvas({
       tool,
       selection,
       fillChar,
+      color,
     };
   });
 
@@ -248,13 +252,17 @@ export function InfiniteCanvas({
 
     for (let r = startRow; r <= endRow; r++) {
       for (let c = startCol; c <= endCol; c++) {
-        const char = displayCells.get(cellKey(c, r));
-        if (!char) continue;
+        const cell = displayCells.get(cellKey(c, r));
+        if (!cell || cell.char === " ") continue;
         const isPreview =
           previewCells &&
           previewCells.get(cellKey(c, r)) !== cells.get(cellKey(c, r));
-        ctx.fillStyle = isPreview ? PREVIEW_CLR : FG;
-        ctx.fillText(char, c * cw + panX + cw * 0.5, r * ch + panY + ch * 0.5);
+        ctx.fillStyle = isPreview ? PREVIEW_CLR : cell.color || FG;
+        ctx.fillText(
+          cell.char,
+          c * cw + panX + cw * 0.5,
+          r * ch + panY + ch * 0.5,
+        );
       }
     }
 
@@ -319,7 +327,7 @@ export function InfiniteCanvas({
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const cell = screenToCell(e.clientX, e.clientY, rect);
-      const { tool, textSession, cells, selection, fillChar } =
+      const { tool, textSession, cells, selection, fillChar, color } =
         stateRef.current;
 
       if (e.button === 2) {
@@ -346,7 +354,7 @@ export function InfiniteCanvas({
       }
 
       if (tool === "fill") {
-        const result = floodFill(cells, cell.col, cell.row, fillChar);
+        const result = floodFill(cells, cell.col, cell.row, fillChar, color);
         onCommit(result);
         return;
       }
@@ -392,10 +400,19 @@ export function InfiniteCanvas({
       if (tool === "freehand") {
         freePoints.current = [cell];
         onPreviewCells(
-          buildPreview(new Map(cells), tool, cell, cell, freePoints.current),
+          buildPreview(
+            new Map(cells),
+            tool,
+            cell,
+            cell,
+            freePoints.current,
+            color,
+          ),
         );
       } else if (tool === "eraser") {
-        onPreviewCells(buildPreview(new Map(cells), tool, cell, cell, []));
+        onPreviewCells(
+          buildPreview(new Map(cells), tool, cell, cell, [], color),
+        );
       }
     },
     [
@@ -404,6 +421,7 @@ export function InfiniteCanvas({
       onTextSessionChange,
       onPreviewCells,
       onSelectionChange,
+      color,
     ],
   );
 
@@ -479,10 +497,18 @@ export function InfiniteCanvas({
         startCell.current,
         cell,
         freePoints.current,
+        color,
       );
       onPreviewCells(preview);
     },
-    [screenToCell, onPanChange, onCursorPos, onPreviewCells, onSelectionChange],
+    [
+      screenToCell,
+      onPanChange,
+      onCursorPos,
+      onPreviewCells,
+      onSelectionChange,
+      color,
+    ],
   );
 
   const onMouseUp = useCallback(
@@ -507,7 +533,7 @@ export function InfiniteCanvas({
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
       const cell = screenToCell(e.clientX, e.clientY, rect);
-      const { tool, cells } = stateRef.current;
+      const { tool, cells, color } = stateRef.current;
 
       if (tool === "select" && selMoveState.current?.dragging) {
         const { region, srcBounds, curDeltaC, curDeltaR } =
@@ -535,6 +561,7 @@ export function InfiniteCanvas({
           startCell.current,
           cell,
           freePoints.current,
+          color,
         );
         onCommit(final);
       }
@@ -544,7 +571,7 @@ export function InfiniteCanvas({
       freePoints.current = [];
       onPreviewCells(null);
     },
-    [screenToCell, onCommit, onPreviewCells],
+    [screenToCell, onCommit, onPreviewCells, color],
   );
 
   useEffect(() => {

@@ -13,7 +13,29 @@ export type Tool =
   | "fill"
   | "eraser";
 
-export type Cells = Map<string, string>;
+export interface Cell {
+  char: string;
+  color: string;
+}
+
+export const DEFAULT_COLOR = "#cdd6f4";
+
+export const COLOR_PALETTE = [
+  "#cdd6f4", // Default/Light
+  "#f38ba8", // Red
+  "#fab387", // Orange
+  "#f9e2af", // Yellow
+  "#a6e3a1", // Green
+  "#94e2d5", // Teal
+  "#89b4fa", // Blue
+  "#cba6f7", // Purple
+  "#f5c2e7", // Pink
+  "#45475a", // Gray
+  "#ffffff", // White
+  "#000000", // Black
+];
+
+export type Cells = Map<string, Cell>;
 
 export function cellKey(col: number, row: number): string {
   return `${col},${row}`;
@@ -25,12 +47,18 @@ export function parseKey(key: string): { col: number; row: number } {
 export function cloneCells(cells: Cells): Cells {
   return new Map(cells);
 }
-export function getCell(cells: Cells, col: number, row: number): string {
-  return cells.get(cellKey(col, row)) ?? " ";
+export function getCell(cells: Cells, col: number, row: number): Cell {
+  return cells.get(cellKey(col, row)) ?? { char: " ", color: DEFAULT_COLOR };
 }
-export function setCell(cells: Cells, col: number, row: number, ch: string) {
+export function setCell(
+  cells: Cells,
+  col: number,
+  row: number,
+  ch: string,
+  color: string = DEFAULT_COLOR,
+) {
   if (ch === " " || ch === "") cells.delete(cellKey(col, row));
-  else cells.set(cellKey(col, row), ch);
+  else cells.set(cellKey(col, row), { char: ch, color });
 }
 export function deleteCell(cells: Cells, col: number, row: number) {
   cells.delete(cellKey(col, row));
@@ -52,7 +80,7 @@ export function cellsToAscii(cells: Cells): string {
   const lines: string[] = [];
   for (let r = minRow; r <= maxRow; r++) {
     let line = "";
-    for (let c = minCol; c <= maxCol; c++) line += getCell(cells, c, r);
+    for (let c = minCol; c <= maxCol; c++) line += getCell(cells, c, r).char;
     lines.push(line.trimEnd());
   }
   while (lines.length > 0 && lines[lines.length - 1] === "") lines.pop();

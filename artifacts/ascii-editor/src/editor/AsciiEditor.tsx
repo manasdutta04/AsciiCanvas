@@ -10,6 +10,7 @@ import {
   selectionBounds,
   cellsToAscii,
   parseKey,
+  DEFAULT_COLOR,
 } from "./types";
 import { drawText } from "./drawing";
 
@@ -31,6 +32,7 @@ export function AsciiEditor() {
   const [textSession, setTextSession] = useState<TextSession | null>(null);
   const [selection, setSelection] = useState<Selection | null>(null);
   const [fillChar, setFillChar] = useState("#");
+  const [color, setColor] = useState(DEFAULT_COLOR);
   const [cursorCol, setCursorCol] = useState(0);
   const [cursorRow, setCursorRow] = useState(0);
   const [copied, setCopied] = useState(false);
@@ -351,6 +353,8 @@ export function AsciiEditor() {
           onZoomChange={handleZoom}
           fillChar={fillChar}
           onFillCharChange={setFillChar}
+          color={color}
+          onColorChange={setColor}
         />
         <div style={styles.canvasWrap}>
           <InfiniteCanvas
@@ -376,6 +380,7 @@ export function AsciiEditor() {
             onPreviewCells={setPreviewCells}
             selection={selection}
             onSelectionChange={setSelection}
+            color={color}
           />
           {textSession && (
             <div style={styles.textHint}>
