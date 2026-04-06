@@ -517,17 +517,18 @@ function TopBar({
 
       <div style={styles.topCenter}>
         {[
-          ["V", "select"],
-          ["H", "hand"],
-          ["B", "box"],
-          ["D", "double"],
-          ["O", "rounded"],
-          ["L", "line"],
-          ["A", "arrow"],
-          ["T", "text"],
-          ["F", "freehand"],
-          ["G", "fill"],
-          ["E", "eraser"],
+          ["V", "Select/Hand"],
+          ["B", "Box"],
+          ["D", "Double"],
+          ["O", "Rounded"],
+          ["U", "Heavy"],
+          ["L", "Line"],
+          ["A", "Arrow"],
+          ["M", "Diamond"],
+          ["T", "Text"],
+          ["F", "Freehand"],
+          ["G", "Fill"],
+          ["E", "Eraser"],
         ].map(([k, d]) => (
           <ShortcutPill key={k} label={k} desc={d} />
         ))}
