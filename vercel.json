@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "cd artifacts/ascii-editor && rm -f pnpm-lock.yaml && pnpm install && pnpm run build",
+  "buildCommand": "cd artifacts/ascii-editor && rm -rf node_modules package-lock.json pnpm-lock.yaml && npm install && npm run build",
   "outputDirectory": "artifacts/ascii-editor/dist",
-  "installCommand": "cd artifacts/ascii-editor && rm -f pnpm-lock.yaml && pnpm install"
+  "installCommand": "cd artifacts/ascii-editor && rm -rf node_modules package-lock.json pnpm-lock.yaml && npm install"
 }
