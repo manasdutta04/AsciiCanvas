@@ -1,6 +1,6 @@
 {
   "framework": "vite",
-  "buildCommand": "cd artifacts/ascii-editor && pnpm install --no-frozen-lockfile --ignore-scripts && pnpm run build",
+  "buildCommand": "cd artifacts/ascii-editor && rm -f pnpm-lock.yaml && pnpm install && pnpm run build",
   "outputDirectory": "artifacts/ascii-editor/dist",
-  "installCommand": "cd artifacts/ascii-editor && pnpm install --no-frozen-lockfile --ignore-scripts"
+  "installCommand": "cd artifacts/ascii-editor && rm -f pnpm-lock.yaml && pnpm install"
 }
