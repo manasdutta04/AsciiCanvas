@@ -598,23 +598,16 @@ function ShortcutPill({ label, desc }: { label: string; desc: string }) {
 
 function BrandLogo() {
   return (
-    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-      <rect
-        x="2"
-        y="2"
-        width="16"
-        height="16"
-        rx="3"
-        stroke="#89b4fa"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M6 7H14M6 10H11M6 13H13"
-        stroke="#89b4fa"
-        strokeWidth="1.2"
-        strokeLinecap="round"
-      />
-    </svg>
+    <span
+      style={{
+        fontFamily: "'Cascadia Code','Fira Code',monospace",
+        fontSize: 16,
+        fontWeight: 700,
+        color: "#89b4fa",
+      }}
+    >
+      #
+    </span>
   );
 }
 function CopyIcon() {
