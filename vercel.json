@@ -1,0 +1,7 @@
+{
+  "buildCommand": "cd artifacts/ascii-editor && pnpm install --no-frozen-lockfile && pnpm run build",
+  "devCommand": "cd artifacts/ascii-editor && pnpm run dev",
+  "installCommand": "cd artifacts/ascii-editor && pnpm install --no-frozen-lockfile",
+  "framework": "vite",
+  "outputDirectory": "artifacts/ascii-editor/dist/public"
+}
