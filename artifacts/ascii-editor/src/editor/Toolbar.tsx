@@ -422,9 +422,9 @@ const styles: Record<string, React.CSSProperties> = {
     boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
   },
   colorPalette: {
-    position: "absolute",
-    top: 38,
-    left: 40,
+    position: "fixed",
+    top: 60,
+    left: 50,
     display: "grid",
     gridTemplateColumns: "repeat(3, 1fr)",
     gap: 4,
@@ -432,7 +432,7 @@ const styles: Record<string, React.CSSProperties> = {
     border: "1px solid #313244",
     borderRadius: 8,
     padding: 6,
-    zIndex: 100,
+    zIndex: 1000,
     boxShadow: "0 4px 16px rgba(0,0,0,0.5)",
   },
   colorSwatch: {
